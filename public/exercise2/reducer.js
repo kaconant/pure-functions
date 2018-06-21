@@ -6,13 +6,39 @@ let initialState = {
 //     state object
 const reducer = (state = initialState, action) => {
 	let { type, counterIndex } = action;
+	
+	let stateCopy = {
+		...state, 
+		counters: [...state.counters]
+	};
+	
 	if (type == "INCREMENT") {
-		state.counters[counterIndex]++;
-		return state;
+		stateCopy.counters[counterIndex]++;
+		return stateCopy;
+	
 	} else if (type == "ADD_COUNTER") {
-		state.counters.push(0);
-		return state;
+		stateCopy.counters.push(0);
+		return stateCopy;
+
 	} else {
-		return state;
+		return stateCopy;
 	}
 }
+
+/* OR 
+if (type == "INCREMENT") {
+		return {
+			counters: [
+				...state.counters.slice(0, counterIndex),
+				state.counters[counterIndex] + 1,
+				...state.counters.slice(counterIndex + 1);
+			]
+		}
+	} else if (type == "ADD_COUNTER") {
+		return {
+			counters: state.counter.concat(0)
+		};
+	} else {
+		return stateCopy;
+	}
+*/
